@@ -46,7 +46,17 @@ projects[panopoly_search][version] = 1.0-rc5
 projects[panopoly_search][subdir] = panopoly
 
 ; The Panopoly Radix
+projects[radix_core][subdir] = panopoly
 projects[radix_core][download][type] = git
 projects[radix_core][download][revision] = 472330c
 projects[radix_core][download][branch] = 7.x-1.x
 projects[radix_core][patch][] = https://drupal.org/files/issues/radix_core-update_radix_theme.patch
+
+; Localization profile
+projects[l10n_install][version] = 1.0-beta27
+projects[l10n_client] = 1.3
+projects[l10n_client][subdir] = contrib
+projects[l10n_update][subdir] = contrib
+projects[l10n_update][download][type] = git
+projects[l10n_update][download][revision] = 20a80d1
+projects[l10n_update][download][branch] = 7.x-1.x

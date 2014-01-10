@@ -21,6 +21,10 @@ function ***MACHINE_NAME***_form_install_configure_form_alter(&$form, $form_stat
     $form['site_information']['site_mail']['#default_value'] = 'admin@' . $_SERVER['HTTP_HOST'];
     $form['admin_account']['account']['mail']['#default_value'] = 'admin@' . $_SERVER['HTTP_HOST'];
   }
+
+  // Call the hook_form_alter from l10n_install profile.
+  require_once(DRUPAL_ROOT . '/profiles/l10n_install/l10n_install.profile');
+  l10n_install_form_install_configure_form_alter($form, $form_state);
 }
 
 /**
@@ -33,6 +37,10 @@ function ***MACHINE_NAME***_install_tasks(&$install_state) {
   require_once(drupal_get_path('module', 'apps') . '/apps.profile.inc');
   $tasks = $tasks + apps_profile_install_tasks($install_state, array('machine name' => 'panopoly', 'default apps' => array('panopoly_demo')));
 
+  // Add Localization tasks to the installation process.
+  require_once(DRUPAL_ROOT . '/profiles/l10n_install/l10n_install.profile');
+  $tasks = $tasks + l10n_install_install_tasks($install_state);
+
   return $tasks;
 }
 
@@ -40,6 +48,10 @@ function ***MACHINE_NAME***_install_tasks(&$install_state) {
  * Implements hook_install_tasks_alter()
  */
 function ***MACHINE_NAME***_install_tasks_alter(&$tasks, $install_state) {
+  // Remove core steps for translation imports.
+  require_once(DRUPAL_ROOT . '/profiles/l10n_install/l10n_install.profile');
+  l10n_install_install_tasks_alter($tasks, $install_state);
+
   // Magically go one level deeper in solving years of dependency problems
   require_once(drupal_get_path('module', 'panopoly_core') . '/panopoly_core.profile.inc');
   $tasks['install_load_profile']['function'] = 'panopoly_core_install_load_profile';
