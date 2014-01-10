@@ -41,11 +41,6 @@ function ***MACHINE_NAME***_install_tasks(&$install_state) {
   require_once(DRUPAL_ROOT . '/profiles/l10n_install/l10n_install.profile');
   $tasks = $tasks + l10n_install_install_tasks($install_state);
 
-  // Hint the user at how to get localization support for more languages.
-  if ($install_state['active_task'] == 'install_select_locale' &! in_array('locale', $install_state['parameters'])) {
-    drupal_set_message('In order to add localization support for more languages, copy the corresponding .po file from the l10n_install profile translations folder to the ***MACHINE_NAME*** profile translations folder.');
-  }
-
   return $tasks;
 }
 
@@ -83,4 +78,13 @@ function ***MACHINE_NAME***_form_apps_profile_apps_select_form_alter(&$form, $fo
 
   // Remove the demo content selection option since this is handled through the Panopoly demo module.
   $form['default_content_fieldset']['#access'] = FALSE;
+}
+
+/**
+ * Implements hook_form_alter().
+ * Uses system prefix to work around https://drupal.org/node/1153646
+ */
+function system_form_install_select_locale_form_alter(&$form, &$form_state, $form_id) {
+  // Hint the user at how to get localization support for more languages.
+  drupal_set_message('In order to add localization support for more languages, copy the corresponding .po file from the l10n_install profile translations folder to the ***MACHINE_NAME*** profile translations folder.');
 }
