@@ -48,3 +48,7 @@ dependencies[] = date_popup_authored
 ; Panopoly Recommended - Other
 dependencies[] = devel
 dependencies[] = uuid
+
+; Localization Install
+dependencies[] = locale
+dependencies[] = l10n_update
