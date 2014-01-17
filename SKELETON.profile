@@ -33,6 +33,9 @@ function ***MACHINE_NAME***_form_install_configure_form_alter(&$form, $form_stat
 function ***MACHINE_NAME***_install_tasks(&$install_state) {
   $tasks = array();
 
+  // Add our custom CSS file for the installation process
+  drupal_add_css(drupal_get_path('profile', '***MACHINE_NAME***') . '/panopoly.css');
+
   // Add the Panopoly app selection to the installation process
   require_once(drupal_get_path('module', 'apps') . '/apps.profile.inc');
   $tasks = $tasks + apps_profile_install_tasks($install_state, array('machine name' => 'panopoly', 'default apps' => array('panopoly_demo')));
